@@ -26,19 +26,19 @@ class MainActivity : AppCompatActivity() {
             .create(TodoAPI::class.java)
 
         binding.apply {
-            progressBar.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
             lifecycleScope.launchWhenCreated {
                 val toDoListResponse = retrofit.getTodos()
                 if(toDoListResponse.isSuccessful && toDoListResponse.body() != null) {
                     val toDoList = toDoListResponse.body()
-
                     rvTodos.apply {
                         val toDoAdapter = toDoList?.let { ToDoAdapter(it) }
                         adapter = toDoAdapter
+                        progressBar.visibility = View.GONE
                     }
                 }
             }
-            progressBar.visibility = View.GONE
+
         }
     }
 }
